@@ -2,7 +2,7 @@
 
 ## Goal
 
-To guide an AI assistant in creating a comprehensive, step-by-step task list in Markdown format based on an existing Product Requirements Document (PRD) and System Architecture document. The task list should provide detailed implementation guidance for adding new features to an existing Next.js App Router application with Tailwind CSS styling and ESLint code quality standards.
+To guide an AI assistant in creating a comprehensive, step-by-step task list in Markdown format based called `tasks-*.md` on an existing Product Requirements Document (PRD) and System Architecture document. The task list should provide detailed implementation guidance for adding new features to an existing Next.js App Router application with Tailwind CSS styling and ESLint code quality standards.
 
 ## Input Requirements
 
