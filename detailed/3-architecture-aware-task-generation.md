@@ -8,6 +8,7 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
 
 - **PRD**: Product Requirements Document (filename format: `prd-*.md`)
 - **System Architecture**: System architecture document (filename format: `architecture-*.md`)
+- **Detailed Technical Requirements**:  Detailed requirements reflecting implementation of System Architecture (filename format: `techreq-*.md`)
 - **Optional Context**: Existing system context document (filename format: `context-*.md`)
 
 ## Process
