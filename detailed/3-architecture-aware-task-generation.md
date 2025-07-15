@@ -16,8 +16,8 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
 
 ### Phase 1: Architecture-Driven Task Generation
 4. **Generate Parent Tasks**: Create high-level tasks that directly correspond to the architecture layers:
-   - Frontend Architecture tasks (Next.js components, pages, state management)
-   - Backend Architecture tasks (API routes, service layers, middleware)
+   - Frontend Architecture tasks (Next.js App Router components, pages, layouts, Server/Client components)
+   - Backend Architecture tasks (API route handlers, Server Actions, service layers, middleware)
    - Data Access Layer tasks (database schemas, ORM setup, caching)
    - Integration tasks (external APIs, microservices, authentication)
    - Infrastructure tasks (deployment, monitoring, security)
@@ -49,20 +49,25 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
 Before generating tasks, ensure the following detailed information is available for each major component:
 
 ### For Frontend Components:
-- Component name and file location
-- Props interface definition
-- State management approach (useState, useContext, external store)
-- Event handlers and user interactions
-- API calls or data fetching requirements
+- Component name and file location (app/[route]/page.tsx, app/[route]/layout.tsx, or components/)
+- Component type (Server Component or Client Component with "use client")
+- Props interface definition and TypeScript types
+- State management approach (useState for client components, server state for server components)
+- Data fetching strategy (server-side in Server Components, client-side in Client Components)
+- Event handlers and user interactions (client-side only)
+- Server Actions integration for mutations
 - Styling approach and design system integration
+- Loading and error states (loading.tsx, error.tsx, not-found.tsx)
 
-### For Backend Services:
+### For Backend Services and Server Actions:
 - Service class name and location
+- Server Action definitions for form handling and mutations
 - Method signatures and return types
 - Database entities and relationships
 - External API integrations
 - Authentication and authorization requirements
 - Error handling and logging specifications
+- Integration with Server Components and route handlers
 
 ### For Database Components:
 - Table/collection names and schemas
@@ -71,23 +76,29 @@ Before generating tasks, ensure the following detailed information is available 
 - Migration requirements
 - Seed data specifications
 
-### For API Endpoints:
-- Route paths and HTTP methods
-- Request/response schemas
-- Validation rules
+### For API Endpoints and Server Actions:
+- Route handler paths (app/api/[route]/route.ts) and HTTP methods (GET, POST, PUT, DELETE)
+- Server Actions for form submissions and mutations
+- Request/response schemas and TypeScript interfaces
+- Validation rules and input sanitization
+- Authentication and authorization middleware
 - Rate limiting and security measures
-- Error response formats
+- Error response formats and status codes
+- Integration with Server Components for data fetching
 
 ## Architecture Integration Requirements
 
 Tasks must explicitly address:
 
-1. **Architectural Patterns**: Implement the specific patterns chosen in the system architecture (microservices, modular monolith, etc.)
-2. **Technology Stack**: Use the exact technologies specified in the architecture
-3. **Security Framework**: Implement the security measures and authentication patterns specified
-4. **Performance Standards**: Meet the performance targets and caching strategies defined
-5. **Integration Points**: Properly integrate with existing microservices and databases as specified
-6. **Monitoring & Observability**: Implement the logging, metrics, and tracing approaches defined
+1. **Next.js App Router Patterns**: Implement Server Components by default, use Client Components ("use client") only when necessary for interactivity
+2. **Architectural Patterns**: Implement the specific patterns chosen in the system architecture (microservices, modular monolith, etc.)
+3. **Technology Stack**: Use the exact technologies specified in the architecture
+4. **Data Fetching Strategy**: Use Server Components for initial data loading, Client Components for interactive features
+5. **Server Actions**: Implement Server Actions for form submissions and mutations instead of API routes where appropriate
+6. **Security Framework**: Implement the security measures and authentication patterns specified
+7. **Performance Standards**: Meet the performance targets and caching strategies defined, leveraging Server Components for performance
+8. **Integration Points**: Properly integrate with existing microservices and databases as specified
+9. **Monitoring & Observability**: Implement the logging, metrics, and tracing approaches defined
 
 ## Testing Strategy
 
@@ -100,10 +111,12 @@ Each task category must include comprehensive testing:
 - Validate input/output contracts
 
 ### Integration Testing
-- Test component interactions
-- Test API endpoint functionality
-- Test database operations
+- Test Server Component and Client Component interactions
+- Test API route handler functionality and Server Action execution
+- Test database operations and data persistence
 - Test third-party service integrations
+- Test Server Component data fetching and Client Component state management
+- Test form submissions with Server Actions
 
 ### End-to-End Testing
 - Test complete user workflows from PRD user stories
@@ -139,15 +152,20 @@ Brief summary of how this implementation follows the system architecture design 
 ## Relevant Files
 
 ### Frontend Files
-- `pages/[feature]/index.tsx` - Main page component implementing [architectural pattern]
-- `components/[feature]/[Component].tsx` - Feature-specific component
+- `app/[feature]/page.tsx` - Main page component implementing [architectural pattern] (Server Component by default)
+- `app/[feature]/layout.tsx` - Layout component for feature section
+- `app/[feature]/loading.tsx` - Loading UI component
+- `app/[feature]/error.tsx` - Error UI component
+- `components/[feature]/[Component].tsx` - Feature-specific component (Client Component with "use client" if needed)
 - `components/[feature]/[Component].test.tsx` - Unit tests for component
-- `hooks/use[Feature].ts` - Custom hook for state management
+- `hooks/use[Feature].ts` - Custom hook for client-side state management
 - `hooks/use[Feature].test.ts` - Unit tests for custom hook
 
 ### Backend Files
-- `pages/api/[feature]/[endpoint].ts` - API endpoint following [API pattern]
-- `pages/api/[feature]/[endpoint].test.ts` - API endpoint tests
+- `app/api/[feature]/[endpoint]/route.ts` - API route handler following [API pattern]
+- `app/api/[feature]/[endpoint]/route.test.ts` - API route handler tests
+- `app/actions/[feature].ts` - Server Actions for mutations and server-side logic
+- `app/actions/[feature].test.ts` - Server Actions tests
 - `lib/services/[feature]Service.ts` - Service layer implementation
 - `lib/services/[feature]Service.test.ts` - Service layer tests
 - `lib/models/[Feature].ts` - Data models and schemas
@@ -160,15 +178,20 @@ Brief summary of how this implementation follows the system architecture design 
 - `lib/db/[feature]Repository.test.ts` - Repository tests
 
 ### Integration & E2E Tests
-- `tests/integration/[feature].test.ts` - Integration tests
-- `tests/e2e/[feature].spec.ts` - End-to-end tests
-- `tests/performance/[feature].test.ts` - Performance tests
+- `__tests__/integration/[feature].test.ts` - Integration tests for API routes and Server Actions
+- `__tests__/e2e/[feature].spec.ts` - End-to-end tests for complete user workflows
+- `__tests__/performance/[feature].test.ts` - Performance tests for Server Components and route handlers
+- `__tests__/server-actions/[feature].test.ts` - Server Action specific tests
 
 ### Infrastructure & Configuration
+- `app/globals.css` - Global styles and CSS variables
+- `app/layout.tsx` - Root layout component with metadata and providers
+- `app/not-found.tsx` - Global 404 page
 - `lib/config/[feature].ts` - Feature configuration
-- `lib/middleware/[feature].ts` - Custom middleware
+- `lib/middleware/[feature].ts` - Custom middleware for App Router
 - `lib/utils/[feature].ts` - Utility functions
 - `lib/utils/[feature].test.ts` - Utility function tests
+- `middleware.ts` - Next.js middleware (root level)
 
 ## Implementation Tasks
 
@@ -190,24 +213,27 @@ Brief summary of how this implementation follows the system architecture design 
 
 ### 3.0 Backend Service Layer Implementation
 - [ ] 3.1 Implement service classes following architectural patterns
-- [ ] 3.2 Create API endpoints adhering to API design patterns
-- [ ] 3.3 Implement authentication and authorization middleware
-- [ ] 3.4 Set up request validation and error handling
-- [ ] 3.5 Implement rate limiting and security measures
-- [ ] 3.6 Write unit tests for service layer methods
-- [ ] 3.7 Write integration tests for API endpoints
-- [ ] 3.8 Implement logging and monitoring as specified
+- [ ] 3.2 Create API route handlers (app/api/[route]/route.ts) adhering to App Router conventions
+- [ ] 3.3 Implement Server Actions for form submissions and mutations
+- [ ] 3.4 Implement authentication and authorization middleware
+- [ ] 3.5 Set up request validation and error handling for route handlers
+- [ ] 3.6 Implement rate limiting and security measures
+- [ ] 3.7 Write unit tests for service layer methods
+- [ ] 3.8 Write integration tests for API route handlers and Server Actions
+- [ ] 3.9 Implement logging and monitoring as specified
 
 ### 4.0 Frontend Component Implementation
-- [ ] 4.1 Create page components following Next.js architecture patterns
-- [ ] 4.2 Implement feature-specific React components
-- [ ] 4.3 Set up state management following architectural decisions
-- [ ] 4.4 Implement client-side data fetching patterns
-- [ ] 4.5 Create custom hooks for reusable logic
-- [ ] 4.6 Implement form handling and validation
-- [ ] 4.7 Write unit tests for React components
-- [ ] 4.8 Write integration tests for user interactions
-- [ ] 4.9 Implement responsive design and accessibility features
+- [ ] 4.1 Create page components (app/[route]/page.tsx) as Server Components following Next.js App Router patterns
+- [ ] 4.2 Create layout components (app/[route]/layout.tsx) for shared UI and metadata
+- [ ] 4.3 Implement loading states (app/[route]/loading.tsx) and error boundaries (app/[route]/error.tsx)
+- [ ] 4.4 Create feature-specific React components (Client Components with "use client" when needed)
+- [ ] 4.5 Set up client-side state management following architectural decisions
+- [ ] 4.6 Implement server-side data fetching in Server Components
+- [ ] 4.7 Create custom hooks for client-side reusable logic
+- [ ] 4.8 Implement form handling with Server Actions
+- [ ] 4.9 Write unit tests for React components (both Server and Client Components)
+- [ ] 4.10 Write integration tests for user interactions and Server Actions
+- [ ] 4.11 Implement responsive design and accessibility features
 
 ### 5.0 Integration and System Testing
 - [ ] 5.1 Set up end-to-end testing framework
@@ -231,15 +257,21 @@ Brief summary of how this implementation follows the system architecture design 
 
 ## Testing Commands
 
-- `npm test` - Run all unit tests
-- `npm run test:integration` - Run integration tests
-- `npm run test:e2e` - Run end-to-end tests
-- `npm run test:performance` - Run performance tests
-- `npm run test:security` - Run security tests
+- `npm test` - Run all unit tests (Server Components, Client Components, Server Actions)
+- `npm run test:integration` - Run integration tests for API routes and Server Actions
+- `npm run test:e2e` - Run end-to-end tests for complete user workflows
+- `npm run test:server-actions` - Run Server Action specific tests
+- `npm run test:performance` - Run performance tests for Server Components and route handlers
+- `npm run test:security` - Run security tests for authentication and authorization
 - `npm run test:coverage` - Generate test coverage report
 
 ## Architecture Compliance Checklist
 
+- [ ] Follows Next.js App Router conventions with proper app/ directory structure
+- [ ] Correctly implements Server Components vs Client Components ("use client" directive)
+- [ ] Uses layout.tsx, loading.tsx, error.tsx, and not-found.tsx appropriately
+- [ ] Implements Server Actions for form handling and mutations
+- [ ] Uses API route handlers (app/api/[route]/route.ts) for external API consumption
 - [ ] Follows specified architectural patterns from system design
 - [ ] Implements security framework as defined in architecture
 - [ ] Meets performance standards specified in architecture
@@ -254,11 +286,14 @@ Brief summary of how this implementation follows the system architecture design 
 ## Notes
 
 - All tasks explicitly reference and implement the architectural decisions made in the system design
+- Tasks follow Next.js App Router conventions with proper Server/Client Component distinctions
+- Server Actions are used for form handling and mutations, while API routes handle external integrations
 - Each component must have comprehensive test coverage including unit, integration, and E2E tests
 - Performance and security testing are integral parts of the implementation process
-- Tasks are organized to follow the architecture layers: data, service, API, and presentation
+- Tasks are organized to follow the architecture layers: data, service, API/Server Actions, and presentation
 - Integration points with existing systems are clearly identified and tested
 - Monitoring and observability are built into each layer of the implementation
+- Special attention is given to Server Component data fetching vs Client Component state management
 ```
 
 ## Interaction Model
