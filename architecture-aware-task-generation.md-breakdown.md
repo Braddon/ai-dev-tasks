@@ -8,32 +8,13 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
 
 - **PRD**: Product Requirements Document (filename format: `prd-*.md`)
 - **System Architecture**: System architecture document (filename format: `architecture-*.md`)
+- **Detailed technical requirements**:  Technical requirements for task generation (filename format: `techreq-*.md`)
 - **Optional Context**: Existing system context document (filename format: `context-*.md`)
 
 ## Process
 
-### Phase 1: Analysis and Component Breakdown
-1. **Document Analysis**: Read and analyze the PRD and system architecture documents
-2. **Component Identification**: Extract all components, services, and modules defined in the architecture
-3. **Detailed Component Breakdown**: For each component identified, suggest the following:
-   - **Component Name**: Exact name and location
-   - **Component Type**: (React component, API endpoint, service class, utility function, etc.)
-   - **Primary Function**: What this component does
-   - **Input Parameters**: Expected inputs, props, or parameters
-   - **Output/Return**: What it returns or produces
-   - **Dependencies**: Other components or services it depends on
-   - **State Management**: If applicable, what state it manages
-   - **Side Effects**: Any external API calls, database operations, or other side effects
 
-4.  **Diagram of Component and Architecture Decisions** Create a diagram that shows
-   -  how these new functions and components are structured
-   -  touch points with existing system, including front end, back end, and API
-   -  input and output types to each component and function, error behaviour, and other items as relevant
-
-5. ** Diagram data flow**
-  - create a diagram of how data flows through these systems, and is shared between front end, backend, and other systems
-
-### Phase 2: Architecture-Driven Task Generation
+### Phase 1: Architecture-Driven Task Generation
 4. **Generate Parent Tasks**: Create high-level tasks that directly correspond to the architecture layers:
    - Frontend Architecture tasks (Next.js components, pages, state management)
    - Backend Architecture tasks (API routes, service layers, middleware)
@@ -42,7 +23,7 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
    - Infrastructure tasks (deployment, monitoring, security)
 5. **Present Parent Tasks**: Show the high-level tasks and ask for confirmation with "Go"
 
-### Phase 3: Detailed Implementation Planning
+### Phase 2: Detailed Implementation Planning
 6. **Generate Sub-Tasks**: Break down each parent task into specific, actionable sub-tasks that:
    - Follow the architectural patterns specified in the system design
    - Implement the functional requirements from the PRD
@@ -50,7 +31,7 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
    - Address security, performance, and scalability considerations from the architecture
    - Implement monitoring and observability as specified
 
-### Phase 4: Testing Strategy Integration
+### Phase 3: Testing Strategy Integration
 7. **Test Planning**: For each component and function, identify:
    - **Unit Tests**: Test individual functions and components in isolation
    - **Integration Tests**: Test component interactions and API integrations
@@ -59,13 +40,13 @@ To guide an AI assistant in creating a comprehensive, step-by-step task list in 
    - **Security Tests**: Validate security measures and authentication flows
    - **Error Handling Tests**: Test edge cases and error scenarios
 
-### Phase 5: File Structure and Documentation
+### Phase 4: File Structure and Documentation
 8. **File Identification**: Based on the architecture and tasks, identify all files that need to be created or modified
 9. **Generate Final Output**: Create the comprehensive task list with proper structure
 
 ## Component Breakdown Questions
 
-Before generating tasks, ask the user to provide detailed information for each major component:
+Before generating tasks, ensure the following detailed information is available for each major component:
 
 ### For Frontend Components:
 - Component name and file location
