@@ -1,7 +1,7 @@
 # Rule: Generating Detailed Component Design from PRD and System Architecture
 
 ## Goal
-To guide an AI assistant in creating a comprehensive detailed design document that defines every component, function, interface, and integration point needed to implement a feature. This detailed design serves as a complete specification for subsequent task generation and implementation.
+To guide an AI assistant in creating a comprehensive detailed design document `techreq-*.md` that defines every component, function, interface, and integration point needed to implement a feature. This detailed design serves as a complete specification for subsequent task generation and implementation.
 
 ## Input Requirements
 - **PRD**: Product Requirements Document (filename format: `prd-*.md`)
