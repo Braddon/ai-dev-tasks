@@ -1,118 +1,180 @@
-# Rule: Generating a Detailed Task List from PRD and System Architecture
+# Task Generation Rules for Next.js App Router Implementation
 
-## Goal
-
-To guide an AI assistant in creating a comprehensive, step-by-step task list in Markdown format based called `tasks-*.md` on an existing Product Requirements Document (PRD) and System Architecture document. The task list should provide detailed implementation guidance for adding new features to an existing Next.js App Router application with Tailwind CSS styling and ESLint code quality standards.
+## Purpose
+Generate comprehensive, step-by-step task lists (`tasks-*.md`) for implementing PRD features in existing Next.js App Router applications, targeting junior developers who need explicit implementation guidance.
 
 ## Input Requirements
+- **PRD**: Product Requirements Document (`prd-*.md`)
+- **Architecture**: System architecture document (`architecture-*.md`)  
+- **Technical Requirements**: Implementation details (`techreq-*.md`)
+- **Context** (Optional): Existing system context (`context-*.md`)
 
-- **PRD**: Product Requirements Document (filename format: `prd-*.md`)
-- **System Architecture**: System architecture document (filename format: `architecture-*.md`)
-- **Detailed Technical Requirements**:  Detailed requirements reflecting implementation of System Architecture (filename format: `techreq-*.md`)
-- **Optional Context**: Existing system context document (filename format: `context-*.md`)
+## Core Technology Standards
+- **Framework**: Next.js App Router with app/ directory structure
+- **Components**: Server Components (default), Client Components ("use client" when needed)
+- **Styling**: Tailwind CSS with responsive design principles
+- **Quality**: ESLint standards, comprehensive testing
+- **Actions**: Server Actions for mutations, API routes for external integrations
 
-## Output Criteria
+## Task Structure Requirements
 
-Tasks must be expressed concisely and thoroughly. As a set of tasks, they should address: 
+### Component Detail Standards
+Each task/subtask must specify:
 
-1. **Next.js App Router Patterns**: Implement server components, client components, layouts, and route handlers
-2. **Existing Technology Stack**: Use the technologies already specified in the architecture
-3. **Security Framework**: Implement security measures consistent with existing patterns
-4. **Performance Standards**: Meet existing performance targets and caching strategies
-5. **Integration Points**: Properly integrate with existing microservices and databases
-6. **Monitoring & Observability**: Use existing logging, metrics, and tracing approaches
-7. **Code Quality**: Maintain existing ESLint standards and formatting
-8. **Design System**: Follow existing Tailwind CSS patterns and responsive design principles
+**For All Components:**
+- Exact name and file location within app/ structure
+- Component type (Server/Client Component, API route, Server Action)
+- Input parameters, props, TypeScript interfaces
+- Dependencies and integration points
+- Testing requirements (unit, integration, E2E)
 
+**For Frontend Components:**
+- Server vs Client Component designation with rationale
+- Data fetching strategy (server-side in Server Components, client-side in Client Components)
+- State management approach (useState for Client, server state for Server)
+- Event handlers and user interactions (Client Components only)
+- Server Actions integration for form handling
+- Tailwind CSS styling and responsive design
+- Loading states (loading.tsx, error.tsx, not-found.tsx)
 
-## Process
-
-### Phase 1: Analysis and Breakdown of detailed technical requirements
-
-1. **Document Analysis**: Read and analyze the PRD,  system architecture and detailed technical requirement documents
-2. **Task Identification and Grouping** Use the detailed requirements to create a high level grouping of tasks.  Grouping should reflect interdependence of code (e.g. an api route would be implemented alongside the components in which that route is called).  
-Use your judgement to find the best grouping of related or interacting elements. Enumerate these Groupings in the tasks document, and list the complete set of requirements that are to be implemented in within each high level task group.  Prompt me to see if they meet our high bar for quality, and if they do I will say 'go'.   If your groupings do not reflect our high bar for quality (they do not make sense or requirements have been missed) then I will asked you to revise. 
-3.  **Subtask Creation** :  Break each of the tasks down into subtasks that are simple, with a low level of complexity and interdependency.  From the architecture and detailed technical requirements, extract all the detail  required to implement these subtasks.  When complete, the tasks should be structured as follows:
-
-1.  TASK NAME
-Requirements that are implemented by completetion of the task.
-[Detail necessary to complete the task and is shared across subtasks]
-1.1 SUBTASK NAME
-[Detail necessary to complete the subtask, not shared across other subtasks]
-Requirements that are implemented by the subtask.
-Information from the architecture and technical requirements relating to the task and subtask should be captured here. 
-
-
-For components, this will include: 
-   - **Component Name**: Exact name and location within App Router structure
-   - **Component Type**: (React Server/Client component, API route handler, server action, utility function, etc.)
-   - **Primary Function**: What this component does
-   - **Input Parameters**: Expected inputs, props, or parameters
-   - **Output/Return**: What it returns or produces
-   - **Dependencies**: Other components or services it depends on
-   - **State Management**: If applicable, what state it manages (client vs server state)
-   - **Side Effects**: Any external API calls, database operations, or other side effects
-   - **Styling Approach**: Tailwind CSS classes, responsive design considerations
-
-### For App Router Pages and Layouts this will include:
-- Page/Layout name and route structure
-- Server vs Client component designation
-- Props interface definition (including searchParams, params)
-- Data fetching approach (server-side, client-side, streaming)
-- Metadata and SEO requirements
-- Tailwind CSS styling approach and responsive design
-- Loading and error state handling
-
-
-### For API Route Handlers this will include
-- Route paths and HTTP methods
+**For Backend Services:**
+- API route handlers (app/api/[route]/route.ts) with HTTP methods
+- Server Actions for form submissions and mutations
 - Request/response schemas and validation
-- Authentication and authorization requirements
-- Rate limiting and security measures
-- Error response formats
-- Database operations and caching strategies
+- Authentication/authorization middleware
+- Error handling and logging specifications
+- Integration with Server Components
 
-### For Server Actions this will include:
-- Action name and location
-- Input validation and sanitization
-- Database operations and side effects
-- Error handling and user feedback
-- Revalidation strategies
+**For Database Changes:**
+- Schema definitions, relationships, indexes
+- Migration requirements and seed data
+- Repository patterns and data access layers
 
-### For Database changes this will include:
-- Table/collection names and schemas
-- Relationships and foreign keys
-- Indexing strategies
-- Migration requirements
-- Seed data specifications
+## Implementation Process
 
+### Phase 1: Architecture Analysis
+1. **Generate Parent Tasks**: Create high-level tasks corresponding to architecture layers:
+   - Frontend (Next.js components, pages, layouts)
+   - Backend (API routes, Server Actions, services)
+   - Data Layer (schemas, repositories, caching)
+   - Integration (external APIs, authentication)
+   - Infrastructure (deployment, monitoring)
 
-### Phase 4: Testing Strategy Integration
-7. **Test Planning**: For each component and function, identify:
-   - **Unit Tests**: Test individual functions and components in isolation
-   - **Integration Tests**: Test component interactions and API integrations
-   - **End-to-End Tests**: Test complete user workflows from the PRD
-   - **Performance Tests**: Validate performance requirements
-   - **Security Tests**: Validate security measures and authentication flows
-   - **Error Handling Tests**: Test edge cases and error scenarios
+2. **Present for Confirmation**: Show parent tasks, await "Go" confirmation
 
-## Component Breakdown Questions
+### Phase 2: Detailed Task Breakdown
+3. **Generate Sub-Tasks**: Break down each parent into specific, actionable sub-tasks that:
+   - Follow architectural patterns from system design
+   - Implement functional requirements from PRD
+   - Include comprehensive testing for each component
+   - Address security, performance, scalability from architecture
+   - Implement specified monitoring and observability
 
-Before generating tasks, ask the user to provide detailed information for each major component:
+### Phase 3: Testing Integration
+4. **Test Planning**: For each component, specify:
+   - **Unit Tests**: Individual functions/components in isolation
+   - **Integration Tests**: Component interactions, API integrations
+   - **End-to-End Tests**: Complete user workflows from PRD
+   - **Performance Tests**: Validate architectural performance requirements
+   - **Security Tests**: Authentication flows, input validation
+   - **Error Handling Tests**: Edge cases and error scenarios
 
+## Task Content Standards
 
+### Information Density Rules
+- **Parent Task Description**: Include only details shared across 2+ subtasks
+- **Subtask Description**: Include specific implementation details unique to that subtask
+- **Architectural Context**: Reference specific patterns and decisions from system design
+- **Requirement Traceability**: Map each task/subtask to specific requirements
 
+### Detail Requirements
+Tasks must address all architectural concerns:
+- Next.js App Router patterns and conventions
+- Existing technology stack integration
+- Security framework implementation
+- Performance targets and caching strategies
+- Microservice integration points
+- Monitoring and observability approaches
+- Code quality standards (ESLint, formatting)
+- Design system consistency (Tailwind CSS)
 
-## Target Audience
+## Output Structure
 
-Assume the primary reader is a **junior developer** who needs explicit guidance on implementing new features within an existing Next.js App Router system with established patterns for Tailwind CSS styling, ESLint standards, and comprehensive testing strategies.
+### File Organization
+- **Task Files**: `tasks-[project-name]-[number].md`
+- **Traceability Matrix**: `tracmat-[project-name].md`
 
-## Output files
-Tasks should be included in in their own markdown file.
-They should be named:  tasks-[project name]-[task number].md 
-E.g. 'tasks-myproject-1.md'
+### Task File Template
+```markdown
+# Task List: [Feature Name]
 
-After producing these files, also create an implementation traceability matrix, that maps requirements, tasks, subtasks and implementation status.  
-File:  tracmat-[project name].md
+## Architecture Integration
+How this implementation follows system design patterns and decisions.
 
-Then verify that the full technical requirements are covered in the traceability matrix, and in each of the tasks. 
+## Component Breakdown
+| Component | Type | Function | Dependencies | Tests |
+|-----------|------|----------|--------------|-------|
+| Name | Server/Client/API | Purpose | List | Unit/Int/E2E |
+
+## Implementation Tasks
+
+### 1.0 [Architecture Layer Name]
+Requirements implemented by this task group.
+
+- [ ] 1.1 [Specific Subtask]
+  - Implementation details unique to this subtask
+  - Architectural patterns and technical requirements
+  - Testing specifications
+
+### 2.0 [Next Architecture Layer]
+[Continue pattern...]
+```
+
+## Quality Assurance
+
+### Task Completeness Verification
+- All technical requirements covered in traceability matrix
+- Each architectural layer properly addressed
+- Server/Client Component boundaries correctly defined
+- Server Actions used appropriately for mutations
+- API routes used correctly for external integrations
+- Comprehensive testing strategy for each component
+- Performance and security requirements integrated
+- Monitoring and observability properly implemented
+
+### File Deliverables
+1. **Task files** with complete implementation guidance
+2. **Traceability matrix** mapping requirements to tasks/subtasks
+3. **Verification report** confirming complete coverage
+4. **File summary** describing purpose and structure of deliverables
+
+## Post-Generation Analysis Requirements
+
+After creating all task files and traceability matrix, provide:
+
+### 1. File Summary
+- **Purpose**: Explain each generated file and its role in the implementation process
+- **Structure**: Describe the organization and relationship between files
+- **Usage**: How developers should use these files during implementation
+
+### 2. Risk Assessment
+Identify potential risks not addressed in the design:
+- **Technical Risks**: Performance bottlenecks, scalability limits, integration failures
+- **Implementation Risks**: Complex dependencies, resource constraints, timeline challenges
+- **Operational Risks**: Monitoring gaps, security vulnerabilities, maintenance overhead
+- **Business Risks**: Feature scope creep, requirement changes, stakeholder alignment
+
+### 3. Complexity Analysis
+Identify requirements that may need further breakdown:
+- **High-Complexity Subtasks**: Tasks that may overwhelm junior developers
+- **Multi-System Integration**: Requirements spanning multiple architectural boundaries
+- **Performance-Critical Paths**: Components requiring specialized optimization
+- **Security-Sensitive Areas**: Authentication, authorization, data protection implementations
+
+### 4. Requirements Clarification
+Highlight areas needing stakeholder input before implementation:
+- **Ambiguous Requirements**: Unclear functional or non-functional specifications
+- **Missing Dependencies**: External systems, third-party services, or data sources
+- **Undefined Interfaces**: API contracts, data formats, or integration protocols
+- **Assumption Validation**: Technical assumptions that require business confirmation
+- **Scope Boundaries**: Feature limits, user permissions, or system constraints
